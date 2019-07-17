@@ -25,7 +25,7 @@
         "filePath": "mainDatabaseQueries/lambda.js",
         "code": "let SL_AWS = require('slappforge-sdk-aws');\nlet connectionManager = require('./ConnectionManager');\nconst rds = new SL_AWS.RDS(connectionManager);\n\nexports.handler = function (event, context, callback) {\n\n    // You must always end/destroy the DB connection after it's used\n\n    // You can pass the existing connection to this function.\n    // A new connection will be created if it's not present as the third param \n    // You must always end/destroy the DB connection after it's used\n    rds.query({\n        instanceIdentifier: 'Main',\n        query: 'SELECT * FROM users;',\n        inserts: [0]\n    }, function (error, results, connection) {\n        if (error) {\n            console.log(\"Error occurred\");\n            throw error;\n        } else {\n            console.log(\"Success\")\n            console.log(results);\n        }\n\n        connection.end();\n    });\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
         "config": {
-          "runtime": "nodejs8.10",
+          "runtime": "nodejs10.x",
           "handler": "handler",
           "timeout": 60,
           "memory": 128,
@@ -196,7 +196,7 @@
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1563362172823
+    "lastSave": 1563362744478
   },
   "VCS_STATE": {
     "provider": "GitHub",
