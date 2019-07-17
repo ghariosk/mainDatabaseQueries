@@ -1,0 +1,208 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "b97e547b-fb43-46d6-8c25-af7b08b0a01e": {
+        "id": "b97e547b-fb43-46d6-8c25-af7b08b0a01e",
+        "parent": null,
+        "name": "mainDatabaseQueries",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "97947397-daae-4e7a-9521-a56b14f72762",
+          "fe9aa1c3-78c1-4997-8e98-d92cab643dee"
+        ],
+        "isRemovable": false,
+        "filePath": "mainDatabaseQueries"
+      },
+      "97947397-daae-4e7a-9521-a56b14f72762": {
+        "id": "97947397-daae-4e7a-9521-a56b14f72762",
+        "parent": "b97e547b-fb43-46d6-8c25-af7b08b0a01e",
+        "name": "lambda.js",
+        "type": "JS_LAMBDA",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "mainDatabaseQueries/lambda.js",
+        "code": "let SL_AWS = require('slappforge-sdk-aws');\nlet connectionManager = require('./ConnectionManager');\nconst rds = new SL_AWS.RDS(connectionManager);\n\nexports.handler = function (event, context, callback) {\n\n    // You must always end/destroy the DB connection after it's used\n\n    // You can pass the existing connection to this function.\n    // A new connection will be created if it's not present as the third param \n    // You must always end/destroy the DB connection after it's used\n    rds.query({\n        instanceIdentifier: 'Main',\n        query: 'SELECT * FROM users;',\n        inserts: [0]\n    }, function (error, results, connection) {\n        if (error) {\n            console.log(\"Error occurred\");\n            throw error;\n        } else {\n            console.log(\"Success\")\n            console.log(results);\n        }\n\n        connection.end();\n    });\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
+        "config": {
+          "runtime": "nodejs8.10",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
+        },
+        "triggers": [
+          {
+            "resourceName": "apigusEast1mainDatabaseQuerymainany",
+            "config": {}
+          }
+        ]
+      },
+      "fe9aa1c3-78c1-4997-8e98-d92cab643dee": {
+        "id": "fe9aa1c3-78c1-4997-8e98-d92cab643dee",
+        "parent": "b97e547b-fb43-46d6-8c25-af7b08b0a01e",
+        "name": "ConnectionManager.js",
+        "type": "JS_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "mainDatabaseQueries/ConnectionManager.js",
+        "code": "module.exports = function() {\n    this.dbConnections = [];\n\n    this.dbConnections[\"Main\"] = {\n        host: process.env.EndPoint_rdsMain,\n        port: process.env.Port_rdsMain,\n        user: process.env.User_rdsMain,\n        password: process.env.Password_rdsMain,\n        database: \"Main\"\n    };\n};"
+      }
+    },
+    "deletedFiles": [],
+    "rootNode": "b97e547b-fb43-46d6-8c25-af7b08b0a01e",
+    "openFiles": [
+      "97947397-daae-4e7a-9521-a56b14f72762",
+      "fe9aa1c3-78c1-4997-8e98-d92cab643dee"
+    ],
+    "currentFileId": "97947397-daae-4e7a-9521-a56b14f72762",
+    "resources": {
+      "apigusEast1mainDatabaseQuerymainany": {
+        "name": "apigusEast1mainDatabaseQuerymainany",
+        "type": "API_GATEWAY",
+        "config": {
+          "selectedRegion": "us-east-1",
+          "apiMode": 0,
+          "apiName": "mainDatabaseQuery",
+          "endpointType": "EDGE",
+          "resourceMode": 0,
+          "resourceName": "main",
+          "resourcePath": "/main",
+          "restMethod": "ANY",
+          "proxyIntegration": false,
+          "enableCORS": false,
+          "stageMode": 0,
+          "stageName": "Dev",
+          "mode": 0
+        }
+      },
+      "rds-Main": {
+        "name": "rds-Main",
+        "type": "RDS",
+        "config": {
+          "editMode": false,
+          "rdsInstance": {
+            "rdsEngineType": "mysql",
+            "rdsEdition": "",
+            "rdsInstanceSpec": {
+              "dbInstanceClass": "db.t2.micro",
+              "dbLicenseModel": "general-public-license",
+              "dbEngineVersion": "5.7.19"
+            },
+            "rdsSetting": {
+              "instanceIdentifier": "Main",
+              "masterUsername": "admin",
+              "masterPassword": "password"
+            },
+            "rdsDBOptions": {
+              "dbName": "Main",
+              "dbPort": "3306"
+            },
+            "rdsInstanceArn": "",
+            "Host": "",
+            "doesExist": false,
+            "initializationQuery": "CREATE TABLE IF NOT EXISTS users (\n    user_id TEXT NOT NULL,\n    first_name TEXT NOT NULL,\n    last_name TEXT NOT NULL, \n    PRIMARY KEY (task_id)\n)  ENGINE=INNODB;\n\nINSERT INTO users ( user_id , first_name , last_name)\nVALUES ( ‘123’, ‘Karl’, ‘Gharios’);",
+            "alreadyDeployed": false
+          },
+          "isGlobalEditMode": true,
+          "params": {
+            "query": "",
+            "inserts": ""
+          },
+          "mode": 0,
+          "projectRegion": "us-east-1",
+          "rdsInstanceResources": [
+            {
+              "name": "rds-Main",
+              "type": "RDS",
+              "config": {
+                "editMode": false,
+                "operation": 1,
+                "rdsInstance": {
+                  "rdsEngineType": "mysql",
+                  "rdsEdition": "",
+                  "rdsInstanceSpec": {
+                    "dbInstanceClass": "db.t2.micro",
+                    "dbLicenseModel": "general-public-license",
+                    "dbEngineVersion": "5.7.19"
+                  },
+                  "rdsSetting": {
+                    "instanceIdentifier": "Main",
+                    "masterUsername": "admin",
+                    "masterPassword": "password"
+                  },
+                  "rdsDBOptions": {
+                    "dbName": "Main",
+                    "dbPort": "3306"
+                  },
+                  "rdsInstanceArn": "",
+                  "Host": "",
+                  "doesExist": false,
+                  "initializationQuery": "",
+                  "alreadyDeployed": false
+                },
+                "rdsInstanceResources": [],
+                "projectRegion": "us-east-1",
+                "mode": 0,
+                "additionalFiles": [],
+                "params": {
+                  "query": "",
+                  "inserts": ""
+                },
+                "isGlobalEditMode": false,
+                "enableInject": true,
+                "isNewFromGlobal": false
+              },
+              "usage": {}
+            }
+          ],
+          "additionalFiles": [],
+          "enableInject": true,
+          "isNewFromGlobal": false
+        }
+      }
+    },
+    "customTemplate": {
+      "dialect": null,
+      "definitions": {}
+    },
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {
+        "slappforge-sdk-aws": {
+          "name": "slappforge-sdk-aws",
+          "language": "javascript",
+          "version": "0.0.5",
+          "dev": false,
+          "notRemovable": false
+        }
+      }
+    }
+  },
+  "PROJECT_META": {
+    "projectName": "mainDatabaseQueries",
+    "projectDescription": "",
+    "projectVersion": "1.0.0",
+    "projectRegion": "us-east-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1563362172823
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "mainDatabaseQueries",
+      "url": "https://github.com/ghariosk/mainDatabaseQueries"
+    }
+  }
+}
