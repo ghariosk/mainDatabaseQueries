@@ -1,5 +1,5 @@
 let SL_AWS = require('slappforge-sdk-aws');
-let connectionManager = require('./ConnectionManager');
+let connectionManager = require('./ConnectionManager2');
 const rds = new SL_AWS.RDS(connectionManager);
 
 exports.handler = function (event, context, callback) {

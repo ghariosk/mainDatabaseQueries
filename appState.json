@@ -9,7 +9,7 @@
         "isDirectory": true,
         "children": [
           "97947397-daae-4e7a-9521-a56b14f72762",
-          "fe9aa1c3-78c1-4997-8e98-d92cab643dee"
+          "bcbe8207-e029-4fcb-88c0-c63b58234a6d"
         ],
         "isRemovable": false,
         "filePath": "mainDatabaseQueries"
@@ -23,7 +23,7 @@
         "children": [],
         "isRemovable": true,
         "filePath": "mainDatabaseQueries/lambda.js",
-        "code": "let SL_AWS = require('slappforge-sdk-aws');\nlet connectionManager = require('./ConnectionManager');\nconst rds = new SL_AWS.RDS(connectionManager);\n\nexports.handler = function (event, context, callback) {\n\n    // You must always end/destroy the DB connection after it's used\n\n    // You can pass the existing connection to this function.\n    // A new connection will be created if it's not present as the third param \n    // You must always end/destroy the DB connection after it's used\n    rds.query({\n        instanceIdentifier: 'Main',\n        query: 'SELECT * FROM users;',\n        inserts: [0]\n    }, function (error, results, connection) {\n        if (error) {\n            console.log(\"Error occurred\");\n            throw error;\n        } else {\n            console.log(\"Success\")\n            console.log(results);\n        }\n\n        connection.end();\n    });\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
+        "code": "let SL_AWS = require('slappforge-sdk-aws');\nlet connectionManager = require('./ConnectionManager2');\nconst rds = new SL_AWS.RDS(connectionManager);\n\nexports.handler = function (event, context, callback) {\n\n    // You must always end/destroy the DB connection after it's used\n\n    // You can pass the existing connection to this function.\n    // A new connection will be created if it's not present as the third param \n    // You must always end/destroy the DB connection after it's used\n    rds.query({\n        instanceIdentifier: 'Main',\n        query: 'SELECT * FROM users;',\n        inserts: [0]\n    }, function (error, results, connection) {\n        if (error) {\n            console.log(\"Error occurred\");\n            throw error;\n        } else {\n            console.log(\"Success\")\n            console.log(results);\n        }\n\n        connection.end();\n    });\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
         "config": {
           "runtime": "nodejs10.x",
           "handler": "handler",
@@ -38,23 +38,33 @@
           }
         ]
       },
-      "fe9aa1c3-78c1-4997-8e98-d92cab643dee": {
-        "id": "fe9aa1c3-78c1-4997-8e98-d92cab643dee",
+      "bcbe8207-e029-4fcb-88c0-c63b58234a6d": {
+        "id": "bcbe8207-e029-4fcb-88c0-c63b58234a6d",
         "parent": "b97e547b-fb43-46d6-8c25-af7b08b0a01e",
-        "name": "ConnectionManager.js",
-        "type": "JS_FILE",
+        "name": "ConnectionManager2.js",
+        "type": "JS_LAMBDA",
         "isDirectory": false,
         "children": [],
         "isRemovable": true,
-        "filePath": "mainDatabaseQueries/ConnectionManager.js",
-        "code": "module.exports = function() {\n    this.dbConnections = [];\n\n    this.dbConnections[\"Main\"] = {\n        host: process.env.EndPoint_rdsMain,\n        port: process.env.Port_rdsMain,\n        user: process.env.User_rdsMain,\n        password: process.env.Password_rdsMain,\n        database: \"Main\"\n    };\n};"
+        "filePath": "mainDatabaseQueries/ConnectionManager2.js",
+        "code": "module.exports = function() {\n    this.dbConnections = [];\n\n    this.dbConnections[\"Main\"] = {\n        host: process.env.EndPoint_rdsMain,\n        port: process.env.Port_rdsMain,\n        user: process.env.User_rdsMain,\n        password: process.env.Password_rdsMain,\n        database: \"Main\"\n    };\n};",
+        "config": {
+          "runtime": "nodejs10.x",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
+        },
+        "triggers": []
       }
     },
-    "deletedFiles": [],
+    "deletedFiles": [
+      "mainDatabaseQueries/ConnectionManager.js"
+    ],
     "rootNode": "b97e547b-fb43-46d6-8c25-af7b08b0a01e",
     "openFiles": [
       "97947397-daae-4e7a-9521-a56b14f72762",
-      "fe9aa1c3-78c1-4997-8e98-d92cab643dee"
+      "bcbe8207-e029-4fcb-88c0-c63b58234a6d"
     ],
     "currentFileId": "97947397-daae-4e7a-9521-a56b14f72762",
     "resources": {
@@ -196,7 +206,7 @@
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1563362744478
+    "lastSave": 1563363001462
   },
   "VCS_STATE": {
     "provider": "GitHub",
