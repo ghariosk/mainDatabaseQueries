@@ -58,15 +58,13 @@
         "triggers": []
       }
     },
-    "deletedFiles": [
-      "mainDatabaseQueries/ConnectionManager.js"
-    ],
+    "deletedFiles": [],
     "rootNode": "b97e547b-fb43-46d6-8c25-af7b08b0a01e",
     "openFiles": [
       "97947397-daae-4e7a-9521-a56b14f72762",
       "bcbe8207-e029-4fcb-88c0-c63b58234a6d"
     ],
-    "currentFileId": "97947397-daae-4e7a-9521-a56b14f72762",
+    "currentFileId": "bcbe8207-e029-4fcb-88c0-c63b58234a6d",
     "resources": {
       "apigusEast1mainDatabaseQuerymainany": {
         "name": "apigusEast1mainDatabaseQuerymainany",
@@ -206,7 +204,7 @@
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1563363001462
+    "lastSave": 1563363034388
   },
   "VCS_STATE": {
     "provider": "GitHub",
