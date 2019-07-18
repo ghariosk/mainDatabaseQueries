@@ -23,7 +23,7 @@
         "children": [],
         "isRemovable": true,
         "filePath": "mainDatabaseQueries/lambda.js",
-        "code": "let SL_AWS = require('slappforge-sdk-aws');\nlet connectionManager = require('./ConnectionManager2');\nconst rds = new SL_AWS.RDS(connectionManager);\n\nexports.handler = async function (event, context, callback) {\n\n    // You must always end/destroy the DB connection after it's used\n\n    // You can pass the existing connection to this function.\n    // A new connection will be created if it's not present as the third param \n    // You must always end/destroy the DB connection after it's used\n\n    let Test = async () => { \n        return new Promise((resolve,reject) => {\n            rds.query({\n            instanceIdentifier: 'Main',\n            query: 'SELECT * FROM users;',\n            inserts: [0]\n            }, function (error, results, connection) {\n                if (error) {\n                    console.log(\"Error occurred\");\n                    throw error;\n                } else {\n                    console.log(\"Success\")\n                    \n                    \n                \n                }\n\n            connection.end();\n            resolve(results)\n        })\n    })\n    }\n\n\n\n    // callback(null, { \"message\": \"Successfully executed\" });\n\n    // let response = await {\n    //     statusCode: \"200\",\n    //     headers: {\n    //         \"x-custom-header\" : \"my custom header value\"\n    //     },\n    //     body: JSON.stringify(Test)\n    // };\n    result = await Test();\n\n    console.log(\"response: \" + JSON.stringify(result))\n    return callback(null, {body: JSON.stringify(result), header: \"200\"});\n}",
+        "code": "let SL_AWS = require('slappforge-sdk-aws');\nlet connectionManager = require('./ConnectionManager2');\nconst rds = new SL_AWS.RDS(connectionManager);\n\nexports.handler = async function (event, context, callback) {\n    // You must always end/destroy the DB connection after it's used\n    let Query = async () => { \n        return new Promise((resolve,reject) => {\n            rds.query({\n                instanceIdentifier: 'Main',\n                query: 'SELECT * FROM users;',\n                inserts: [0]\n                }, function (error, results, connection) {\n                    if (error) {\n                        console.log(\"Error occurred\");\n                        throw error;\n                    } else {\n                        console.log(\"Success\")\n                    }\n                    connection.end();\n                    if (results) {\n                        resolve(results)\n                    }\n                }\n            )\n        })\n    };\n    result = await Query();\n    let headers =  {\n        'content-type': [{\n                key: 'Content-Type',\n                value: 'application/json'\n        }],\n            'content-encoding': [{\n                key: 'Content-Encoding',\n                value: 'UTF-8'\n        }]\n    }\n    console.log(\"response: \" + JSON.stringify(result))\n    return callback(null, {body: result, status: \"200\", headers: headers });\n}",
         "config": {
           "runtime": "nodejs10.x",
           "handler": "handler",
@@ -277,7 +277,7 @@
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1563451768770
+    "lastSave": 1563459643922
   },
   "VCS_STATE": {
     "provider": "GitHub",
