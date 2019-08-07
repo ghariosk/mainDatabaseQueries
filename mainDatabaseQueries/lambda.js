@@ -37,5 +37,5 @@ exports.handler = async function (event, context, callback) {
         }]
     }
     console.log("response: " + JSON.stringify(result))
-    return callback(null, {body: result, status: "200", headers: headers });
+    return event;
 }
