@@ -23,7 +23,7 @@
         "children": [],
         "isRemovable": true,
         "filePath": "mainDatabaseQueries/lambda.js",
-        "code": "let SL_AWS = require('slappforge-sdk-aws');\nlet connectionManager = require('./ConnectionManager2');\nconst rds = new SL_AWS.RDS(connectionManager);\n\nexports.handler = async function (event, context, callback) {\n    // You must always end/destroy the DB connection after it's used\n    let Query = async () => { \n        return new Promise((resolve,reject) => {\n            rds.query({\n                instanceIdentifier: 'Main',\n                query: 'SELECT * FROM users;',\n                inserts: [0]\n                }, function (error, results, connection) {\n                    if (error) {\n                        console.log(\"Error occurred\");\n                        throw error;\n                    } else {\n                        console.log(\"Success\")\n                    }\n                    connection.end();\n                    if (results) {\n                        resolve(results)\n                    }\n                }\n            )\n        })\n    };\n    result = await Query();\n    let headers =  {\n        'content-type': [{\n                key: 'Content-Type',\n                value: 'application/json'\n        }],\n            'content-encoding': [{\n                key: 'Content-Encoding',\n                value: 'UTF-8'\n        }]\n    }\n    console.log(\"response: \" + JSON.stringify(result))\n    callback(null, \"Hello\");\n}",
+        "code": "let SL_AWS = require('slappforge-sdk-aws');\nlet connectionManager = require('./ConnectionManager2');\nconst rds = new SL_AWS.RDS(connectionManager);\n\nexports.handler = async function (event, context, callback) {\n    // You must always end/destroy the DB connection after it's used\n    let Query = async () => { \n        return new Promise((resolve,reject) => {\n            rds.query({\n                instanceIdentifier: 'Main',\n                query: 'SELECT * FROM users;',\n                inserts: [0]\n                }, function (error, results, connection) {\n                    if (error) {\n                        console.log(\"Error occurred\");\n                        throw error;\n                    } else {\n                        console.log(\"Success\")\n                    }\n                    connection.end();\n                    if (results) {\n                        resolve(results)\n                    }\n                }\n            )\n        })\n    };\n    result = await Query();\n    let headers =  {\n        'content-type': [{\n                key: 'Content-Type',\n                value: 'application/json'\n        }],\n            'content-encoding': [{\n                key: 'Content-Encoding',\n                value: 'UTF-8'\n        }]\n    }\n    console.log(\"response: \" + JSON.stringify(result))\n   return {body: result}\n}",
         "config": {
           "runtime": "nodejs10.x",
           "handler": "handler",
@@ -160,7 +160,7 @@
                   "rdsInstanceArn": "",
                   "Host": "",
                   "doesExist": false,
-                  "initializationQuery": "CREATE TABLE IF NOT EXISTS users (\n    user_id TEXT NOT NULL,\n    first_name TEXT NOT NULL,\n    last_name TEXT NOT NULL, \n    PRIMARY KEY (task_id)\n)  ENGINE=INNODB;\n\nINSERT INTO users ( user_id , first_name , last_name)\nVALUES ( ‘123’, ‘Karl’, ‘Gharios’);",
+                  "initializationQuery": "CREATE TABLE IF NOT EXISTS users (\nÂ Â Â Â user_id TEXT NOT NULL,\nÂ Â Â Â first_name TEXT NOT NULL,\n    last_name TEXT NOT NULL, \nÂ Â Â Â PRIMARY KEY (task_id)\n)Â Â ENGINE=INNODB;\n\nINSERT INTO users ( user_id , first_name , last_name)\nVALUES ( â123â, âKarlâ, âGhariosâ);",
                   "alreadyDeployed": false
                 },
                 "isGlobalEditMode": true,
@@ -277,7 +277,7 @@
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1565345579507
+    "lastSave": 1568703150097
   },
   "VCS_STATE": {
     "provider": "GitHub",
