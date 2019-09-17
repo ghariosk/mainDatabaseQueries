@@ -36,6 +36,6 @@ exports.handler = async function (event, context, callback) {
                 value: 'UTF-8'
         }]
     }
-    console.log("response: " + JSON.stringify(result))
-   return {body: result}
+    
+   callback(null , result)
 }
